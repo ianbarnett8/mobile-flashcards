@@ -73,7 +73,6 @@ export default class DeckListView extends React.Component {
   }
 
   componentWillMount() {
-    API.clearDecks()
     this.props.navigation.setParams({ addDeck: this.addDeck });
   }
 

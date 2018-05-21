@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Page, { PageHeader} from './Page'
+import Page from './Page'
 import API from '../dal/api.js'
+import { clearLocalNotification, setLocalNotification } from '../util/notifications'
 
 class QuizzContainer extends React.Component {
   render() {
@@ -81,7 +82,10 @@ export default class QuizzView extends React.Component {
     super(props)
     this.showQuestion = () => this.setState({showAnswer: false})
     this.showAnswer = () => this.setState({showAnswer: true})
-    this.answered = correct => this.setState({showAnswer: false, index: this.state.index+1, correct: this.state.correct+(correct?1:0)})
+    this.answered = correct => {
+      clearLocalNotification().then(setLocalNotification)
+      return this.setState({showAnswer: false, index: this.state.index+1, correct: this.state.correct+(correct?1:0)})
+    }
     this.restart = () => this.setState({showAnswer: false, index: 0, correct: 0})
     this.goBack = () => {
       this.setState({showAnswer: false, index: 0, correct: 0})

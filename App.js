@@ -6,6 +6,7 @@ import AddDeck from './views/AddDeck'
 import AddQuestion from './views/AddQuestion'
 import { createStackNavigator } from 'react-navigation';
 import API from './dal/api.js'
+import { setLocalNotification } from './util/notifications'
 import { YellowBox } from 'react-native'
 
 const RootStack = createStackNavigator(
@@ -38,7 +39,6 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#448844',
@@ -52,13 +52,11 @@ const RootStack = createStackNavigator(
 );
 
 export default class App extends React.Component {
-  async clearDecks() {
-    await API.clearDecks()
-  }
 
   componentDidMount () {
     YellowBox.ignoreWarnings(['Warning: ...']);
-    this.clearDecks()
+    //API.clearDecks()
+    setLocalNotification()
   }
 
   render() {

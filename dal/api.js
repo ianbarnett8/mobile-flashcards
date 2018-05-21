@@ -2,6 +2,8 @@ import { AsyncStorage } from 'react-native'
 import dummyData from './decks.js'
 
 const DECK_STORAGE_KEY = 'mobile-flashcards:decks'
+const NOTIFICATION_STORAGE_KEY = 'mobile-flashcards:notifications'
+
 const idFor = title => title.replace(/\s+/gi,'-').replace(/[^a-z0-9-]/ig,'')
 
 const asMap = (acc,deck) => ({...acc, [deck.id]: {...deck} })
@@ -29,8 +31,20 @@ const getDeck = async id => {
 const filter = id => decks => decks.filter(deck => deck.id === id)[0]
 
 const API = {
+  clearNotifications: async () => {
+    return await AsyncStorage.removeItem(NOTIFICATION_STORAGE_KEY).catch(err => { console.log(err) })
+  },
+
+  getNotification: async () => {
+    return await AsyncStorage.getItem(NOTIFICATION_STORAGE_KEY).catch(err => { console.log(err) })
+  },
+
+  setNotification: async data => {
+    return await AsyncStorage.setItem(NOTIFICATION_STORAGE_KEY, data).catch(err => { console.log(err) })
+  },
+
   clearDecks: async () => {
-    return await AsyncStorage.clear().catch(err => { console.log(err) })
+    return await AsyncStorage.removeItem(DECK_STORAGE_KEY).catch(err => { console.log(err) })
   },
 
   getDecks: async () => {

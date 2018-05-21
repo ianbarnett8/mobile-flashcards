@@ -1,7 +1,7 @@
 export default function dummyData () {
-  const padding = []
+  const extras = []
   //for (let i=0; i<8; ++i) {
-  //  padding.push({ id: 'deck'+i, title: 'Deck'+i, questions: [] })
+  //  extras.push({ id: 'deck'+i, title: 'Deck'+i, questions: [] })
   //}
 
   return [
@@ -29,6 +29,6 @@ export default function dummyData () {
         }
       ]
     },
-    ...padding,
+    ...extras,
   ]
 }
