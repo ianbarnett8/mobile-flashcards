@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback, Platform, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback, TouchableHighlight, Platform, Button } from 'react-native';
 import Page from './Page'
 import API from '../dal/api.js'
 
@@ -16,18 +16,26 @@ class DeckList extends React.Component {
 }
 
 class DeckListItem extends React.Component {
-
   render() {
     const deck = this.props.deck.item
     const loadDecks = this.props.loadDecks
-    return (
-      <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('DeckView', { id: deck.id, reload: loadDecks })}
-        background={Platform.OS==='android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
+    const goToDeck = () => this.props.navigation.navigate('DeckView', { id: deck.id, reload: loadDecks })
+
+    return (Platform.OS==='android' ?
+      <TouchableNativeFeedback onPress={goToDeck}
+        background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={styles.deck}>
           <Text style={styles.h2}>{deck.title}</Text>
           <Text style={{textAlign: 'right', marginRight: 5}}>{deck.questions.length} cards</Text>
         </View>
       </TouchableNativeFeedback>
+        :
+      <TouchableHighlight onPress={goToDeck}>
+        <View style={styles.deck}>
+          <Text style={styles.h2}>{deck.title}</Text>
+          <Text style={{textAlign: 'right', marginRight: 5}}>{deck.questions.length} cards</Text>
+        </View>
+      </TouchableHighlight>
     )}
 }
 
